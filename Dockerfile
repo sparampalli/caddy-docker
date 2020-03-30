@@ -10,6 +10,8 @@ ARG enable_telemetry="true"
 # process wrapper
 RUN go get -v github.com/abiosoft/parent
 
+ADD https://raw.githubusercontent.com/jeffreystoke/caddy-docker/master/builder/builder.sh /usr/bin/builder.sh
+
 RUN VERSION=${version} PLUGINS=${plugins} ENABLE_TELEMETRY=${enable_telemetry} /bin/sh /usr/bin/builder.sh
 
 #
