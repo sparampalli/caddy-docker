@@ -4,13 +4,12 @@ COPY builder.sh /usr/bin/builder.sh
 ARG version="1.0.5"
 RUN VERSION=${version} /bin/sh /usr/bin/builder.sh
 
-# Let's Encrypt Agreement
-ENV ACME_AGREE="false"
-
-
 FROM alpine:latest
 
 ENV CADDY_VERSION=1.0.5
+
+# Let's Encrypt Agreement
+ENV ACME_AGREE="false"
 
 ENV CADDYPATH=/caddy/certs
 
