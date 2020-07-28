@@ -58,7 +58,7 @@ EOF
         _ "github.com/hacdias/caddy-minify"
         _ "github.com/epicagency/caddy-expires"
         _ "github.com/captncraig/caddy-realip"
-        _ "github.com/caddyserver/dnsproviders/route53
+        _ "github.com/caddyserver/dnsproviders/route53"
     )
     func main() {
         caddytls.RegisterDNSProvider("dnspod", NewDNSProvider)
