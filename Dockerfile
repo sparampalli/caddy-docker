@@ -2,6 +2,10 @@ FROM abiosoft/caddy:builder as builder
 RUN apk add --no-cache git gcc musl-dev
 COPY builder.sh /usr/bin/builder.sh
 ARG version="1.0.5"
+
+# process wrapper
+RUN go get -v github.com/abiosoft/parent
+
 RUN VERSION=${version} /bin/sh /usr/bin/builder.sh
 
 FROM alpine:latest
