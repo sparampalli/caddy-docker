@@ -1,4 +1,4 @@
-FROM golang:1.13-alpine as builder
+FROM abiosoft/caddy:builder as builder
 RUN apk add --no-cache git gcc musl-dev
 COPY builder.sh /usr/bin/builder.sh
 ARG version="1.0.5"
@@ -33,4 +33,8 @@ WORKDIR /srv
 COPY Caddyfile /etc/Caddyfile
 COPY index.html /srv/index.html
 
-CMD ["caddy", "--conf", "/etc/Caddyfile", "--log", "stdout", "--agree=$ACME_AGREE"]
+COPY --from=builder /go/bin/parent /bin/parent
+
+ENTRYPOINT ["/bin/parent", "caddy"]
+
+CMD [ "--conf", "/etc/Caddyfile", "--log", "stdout", "--agree=$ACME_AGREE"]
