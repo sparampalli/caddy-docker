@@ -3,7 +3,8 @@ RUN apk add --no-cache git gcc musl-dev
 RUN mkdir /www /caddy
 COPY builder.sh /usr/bin/builder.sh
 ARG version="1.0.5"
-RUN VERSION=${version} /bin/sh /usr/bin/builder.sh
+ARG plugins="git,cors,realip,expires,cache,cloudflare"
+RUN VERSION=${version} PLUGINS=${plugins} /bin/sh /usr/bin/builder.sh
 
 
 FROM alpine:latest
