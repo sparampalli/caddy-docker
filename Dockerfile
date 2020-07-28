@@ -1,7 +1,9 @@
 #
 # Builder
 #
-FROM sparampalli/caddy:builder as builder
+#FROM sparampalli/caddy:builder as builder
+
+FROM abiosoft/caddy:builder as builder
 
 ARG version="1.0.3"
 ARG plugins="git,cors,realip,expires,cache,cloudflare"
