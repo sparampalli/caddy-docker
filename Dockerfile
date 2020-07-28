@@ -4,6 +4,9 @@ COPY builder.sh /usr/bin/builder.sh
 ARG version="1.0.5"
 RUN VERSION=${version} /bin/sh /usr/bin/builder.sh
 
+# Let's Encrypt Agreement
+ENV ACME_AGREE="false"
+
 
 FROM alpine:latest
 
@@ -31,9 +34,4 @@ WORKDIR /srv
 COPY Caddyfile /etc/Caddyfile
 COPY index.html /srv/index.html
 
-# install process wrapper
-COPY --from=builder /go/bin/parent /bin/parent
-
-ENTRYPOINT ["/bin/parent", "caddy"]
-
-CMD ["caddy","--conf", "/caddy/Caddyfile", "--log", "stdout", "--agree"]
+CMD ["--conf", "/etc/Caddyfile", "--log", "stdout", "--agree=$ACME_AGREE"]
