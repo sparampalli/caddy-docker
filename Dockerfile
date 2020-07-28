@@ -1,9 +1,8 @@
 #
 # Builder
 #
-#FROM sparampalli/caddy:builder as builder
 
-FROM abiosoft/caddy:builder as builder
+FROM sparampalli/caddy:builder as builder
 
 ARG version="1.0.3"
 ARG plugins="git,cors,realip,expires,cache,cloudflare"
@@ -12,7 +11,7 @@ ARG enable_telemetry="true"
 # process wrapper
 RUN go get -v github.com/abiosoft/parent
 
-ADD https://raw.githubusercontent.com/jeffreystoke/caddy-docker/master/builder/builder.sh /usr/bin/builder.sh
+# ADD https://raw.githubusercontent.com/jeffreystoke/caddy-docker/master/builder/builder.sh /usr/bin/builder.sh
 
 RUN VERSION=${version} PLUGINS=${plugins} ENABLE_TELEMETRY=${enable_telemetry} /bin/sh /usr/bin/builder.sh
 
