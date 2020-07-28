@@ -34,4 +34,4 @@ WORKDIR /srv
 COPY Caddyfile /etc/Caddyfile
 COPY index.html /srv/index.html
 
-CMD ["--conf", "/etc/Caddyfile", "--log", "stdout", "--agree=$ACME_AGREE"]
+CMD ["caddy", "--conf", "/etc/Caddyfile", "--log", "stdout", "--agree=$ACME_AGREE"]
