@@ -1,21 +1,33 @@
-FROM abiosoft/caddy:builder as builder
-RUN apk add --no-cache git gcc musl-dev
-COPY builder.sh /usr/bin/builder.sh
-ARG version="1.0.5"
+#
+# Builder
+#
+
+FROM sparampalli/caddy:builder as builder
+
+ARG version="1.0.3"
+ARG plugins="git,cors,realip,expires,cache,cloudflare"
+ARG enable_telemetry="true"
 
 # process wrapper
 RUN go get -v github.com/abiosoft/parent
 
-RUN VERSION=${version} /bin/sh /usr/bin/builder.sh
+ADD https://raw.githubusercontent.com/jeffreystoke/caddy-docker/master/builder/builder.sh /usr/bin/builder.sh
+RUN VERSION=${version} PLUGINS=${plugins} ENABLE_TELEMETRY=${enable_telemetry} /bin/sh /usr/bin/builder.sh
 
-FROM alpine:latest
+#
+# Final stage
+#
+FROM alpine:3.10
+LABEL maintainer "Abiola Ibrahim <abiola89@gmail.com>"
 
-ENV CADDY_VERSION=1.0.5
+ARG version="1.0.3"
+LABEL caddy_version="$version"
 
 # Let's Encrypt Agreement
 ENV ACME_AGREE="false"
 
-ENV CADDYPATH=/caddy/certs
+# Telemetry Stats
+ENV ENABLE_TELEMETRY="$enable_telemetry"
 
 RUN apk add --no-cache \
     ca-certificates \
@@ -24,9 +36,10 @@ RUN apk add --no-cache \
     openssh-client \
     tzdata
 
-
+# install caddy
 COPY --from=builder /install/caddy /usr/bin/caddy
 
+# validate install
 RUN /usr/bin/caddy -version
 RUN /usr/bin/caddy -plugins
 
@@ -37,8 +50,8 @@ WORKDIR /srv
 COPY Caddyfile /etc/Caddyfile
 COPY index.html /srv/index.html
 
+# install process wrapper
 COPY --from=builder /go/bin/parent /bin/parent
 
 ENTRYPOINT ["/bin/parent", "caddy"]
-
-CMD [ "--conf", "/etc/Caddyfile", "--log", "stdout", "--agree=$ACME_AGREE"]
+CMD ["--conf", "/etc/Caddyfile", "--log", "stdout", "--agree="]
