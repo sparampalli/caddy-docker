@@ -26,10 +26,8 @@ module() {
         github.com/caddyserver/caddy v1.0.5
         github.com/captncraig/caddy-realip v0.0.0-20190710144553-6df827e22ab8
         github.com/captncraig/cors v0.0.0-20190703115713-e80254a89df1
-        github.com/echocat/caddy-filter v0.14.0
         github.com/epicagency/caddy-expires v1.1.1
         github.com/go-acme/lego/v3 v3.7.0
-        github.com/hacdias/caddy-minify v1.0.2
         github.com/nicolasazrak/caddy-cache v0.3.4
         github.com/pquerna/cachecontrol v0.0.0-20180517163645-1555304b9b35 // indirect
     )
@@ -50,12 +48,9 @@ EOF
         // _ "import/path/here"
         "errors"
         "github.com/caddyserver/caddy/caddytls"
-        "github.com/go-acme/lego/v3/providers/dns/dnspod"
         _ "github.com/abiosoft/caddy-git"
         _ "github.com/captncraig/cors"
-        _ "github.com/echocat/caddy-filter"
         _ "github.com/nicolasazrak/caddy-cache"
-        _ "github.com/hacdias/caddy-minify"
         _ "github.com/epicagency/caddy-expires"
         _ "github.com/captncraig/caddy-realip"
         _ "github.com/caddyserver/dnsproviders/route53"
