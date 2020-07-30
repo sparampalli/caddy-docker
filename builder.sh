@@ -48,7 +48,6 @@ EOF
         // _ "import/path/here"
         "errors"
         "github.com/caddyserver/caddy/caddytls"
-        "github.com/go-acme/lego/v3/providers/dns/dnspod"
         _ "github.com/abiosoft/caddy-git"
         _ "github.com/captncraig/cors"
         _ "github.com/nicolasazrak/caddy-cache"
@@ -57,7 +56,6 @@ EOF
         _ "github.com/caddyserver/dnsproviders/route53"
     )
     func main() {
-        caddytls.RegisterDNSProvider("dnspod", NewDNSProvider)
         caddy.RegisterPlugin("cors", caddy.Plugin{
             ServerType: "http",
             Action:     setup,
@@ -65,18 +63,6 @@ EOF
         // optional: disable telemetry
         caddymain.EnableTelemetry = true
         caddymain.Run()
-    }
-    func NewDNSProvider(credentials ...string) (caddytls.ChallengeProvider, error) {
-        switch len(credentials) {
-        case 0:
-            return dnspod.NewDNSProvider()
-        case 1:
-            config := dnspod.NewDefaultConfig()
-            config.LoginToken = credentials[0]
-            return dnspod.NewDNSProviderConfig(config)
-        default:
-            return nil, errors.New("invalid credentials length")
-        }
     }
     type corsRule struct {
         Conf *cors.Config
