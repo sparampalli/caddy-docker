@@ -48,6 +48,7 @@ EOF
         // _ "import/path/here"
         "errors"
         "github.com/caddyserver/caddy/caddytls"
+        "github.com/go-acme/lego/v3/providers/dns/dnspod"
         _ "github.com/abiosoft/caddy-git"
         _ "github.com/captncraig/cors"
         _ "github.com/nicolasazrak/caddy-cache"
@@ -62,7 +63,7 @@ EOF
             Action:     setup,
         })
         // optional: disable telemetry
-        caddymain.EnableTelemetry = false
+        caddymain.EnableTelemetry = true
         caddymain.Run()
     }
     func NewDNSProvider(credentials ...string) (caddytls.ChallengeProvider, error) {
