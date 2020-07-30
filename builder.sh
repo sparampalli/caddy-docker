@@ -46,8 +46,6 @@ EOF
         "github.com/captncraig/cors"
         // plug in plugins here, for example:
         // _ "import/path/here"
-        "errors"
-        "github.com/caddyserver/caddy/caddytls"
         _ "github.com/abiosoft/caddy-git"
         _ "github.com/captncraig/cors"
         _ "github.com/nicolasazrak/caddy-cache"
