@@ -15,7 +15,7 @@ RUN VERSION=${version} PLUGINS=${plugins} ENABLE_TELEMETRY=false /bin/sh /usr/bi
 # Final Stage
 #
 FROM alpine:3.10
-LABEL maintainer "Abiola Ibrahim <abiola89@gmail.com>"
+LABEL maintainer "P Srikantha <sparampalli@vmware.com>"
 
 ARG version="1.0.3"
 LABEL caddy_version="$version"
