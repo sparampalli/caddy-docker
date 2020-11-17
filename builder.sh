@@ -52,6 +52,7 @@ EOF
         _ "github.com/epicagency/caddy-expires"
         _ "github.com/captncraig/caddy-realip"
         _ "github.com/caddyserver/dnsproviders/route53"
+         _ "github.com/caddyserver/dnsproviders/googlecloud"
     )
     func main() {
         caddy.RegisterPlugin("cors", caddy.Plugin{
