@@ -27,7 +27,7 @@ RUN apk add --no-cache \
 COPY --from=builder /install/caddy /usr/bin/caddy
 
 RUN /usr/bin/caddy -version && \
-    RUN /usr/bin/caddy -plugins
+    /usr/bin/caddy -plugins
 
 EXPOSE 80 443 2015
 VOLUME /root/.caddy /srv
