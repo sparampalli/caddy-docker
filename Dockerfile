@@ -4,18 +4,17 @@ COPY builder.sh /usr/bin/builder.sh
 ARG version="1.0.5"
 
 # process wrapper
-RUN go get -v github.com/abiosoft/parent
-
-RUN VERSION=${version} /bin/sh /usr/bin/builder.sh
+RUN go get -v github.com/abiosoft/parent && \
+    VERSION=${version} /bin/sh /usr/bin/builder.sh
 
 FROM alpine:latest
 
-ENV CADDY_VERSION=1.0.5
+ENV CADDY_VERSION=1.0.5 \
+    ACME_AGREE="false" \
+    CADDYPATH=/caddy/certs \
+    GCE_PROJECT="saastest-202018" \
+    GOOGLE_APPLICATION_CREDENTIALS="/var/run/credentials/service-account-test-credentials.json"
 
-# Let's Encrypt Agreement
-ENV ACME_AGREE="false"
-
-ENV CADDYPATH=/caddy/certs
 
 RUN apk add --no-cache \
     ca-certificates \
@@ -27,8 +26,8 @@ RUN apk add --no-cache \
 
 COPY --from=builder /install/caddy /usr/bin/caddy
 
-RUN /usr/bin/caddy -version
-RUN /usr/bin/caddy -plugins
+RUN /usr/bin/caddy -version && \
+    RUN /usr/bin/caddy -plugins
 
 EXPOSE 80 443 2015
 VOLUME /root/.caddy /srv
